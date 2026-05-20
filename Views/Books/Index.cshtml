@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PersonalLibrary.Models.Book>
+
+@{
+    ViewData["Title"] = "Моя бібліотека";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Моя бібліотека</h1>
+    <p class="lead">Тут зберігаються всі ваші улюблені книги</p>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="Books" asp-action="Create">Додати нову книгу</a>
+</p>
+
+<table class="table table-striped table-hover mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Назва</th>
+            <th>Автор</th>
+            <th>Розділ</th>
+            <th>В наявності</th>
+            <th>Оцінка</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5" class="text-center text-muted">Ваша бібліотека поки що порожня. Додайте першу книгу!</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="fw-bold">@item.Title</td>
+                    <td>@item.Author</td>
+                    <td><span class="badge bg-info text-dark">@item.Section</span></td>
+                    <td>@(item.IsAvailable ? "Так" : "Ні")</td>
+                    <td>@(item.PersonalRating != null ? item.PersonalRating + "/10" : "-")</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
