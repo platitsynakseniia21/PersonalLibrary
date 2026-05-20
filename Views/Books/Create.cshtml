@@ -1,0 +1,60 @@
+﻿@model PersonalLibrary.Models.Book
+
+@{
+    ViewData["Title"] = "Додати книгу";
+}
+
+<h1 class="mb-4">Додати нову книгу</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label fw-bold"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Author" class="form-label fw-bold"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Publisher" class="form-label fw-bold"></label>
+                <input asp-for="Publisher" class="form-control" placeholder="Необов'язково" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Year" class="form-label fw-bold"></label>
+                <input asp-for="Year" type="number" class="form-control" placeholder="Наприклад: 2026" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Section" class="form-label fw-bold"></label>
+                <input asp-for="Section" class="form-control" placeholder="Наприклад: Фантастика, Навчальна..." />
+                <span asp-validation-for="Section" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="IsAvailable" class="form-check-input" />
+                <label asp-for="IsAvailable" class="form-check-label fw-bold"></label>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="PersonalRating" class="form-label fw-bold"></label>
+                <input asp-for="PersonalRating" type="number" min="1" max="10" class="form-control" placeholder="Від 1 до 10" />
+                <span asp-validation-for="PersonalRating" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success me-2">Зберегти</button>
+            <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
