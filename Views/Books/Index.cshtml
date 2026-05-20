@@ -21,13 +21,14 @@
             <th>Розділ</th>
             <th>В наявності</th>
             <th>Оцінка</th>
+            <th>Дії</th> </tr>
         </tr>
     </thead>
     <tbody>
         @if (!Model.Any())
         {
             <tr>
-                <td colspan="5" class="text-center text-muted">Ваша бібліотека поки що порожня. Додайте першу книгу!</td>
+                <td colspan="6" class="text-center text-muted">Ваша бібліотека поки що порожня. Додайте першу книгу!</td>
             </tr>
         }
         else
@@ -40,6 +41,13 @@
                     <td><span class="badge bg-info text-dark">@item.Section</span></td>
                     <td>@(item.IsAvailable ? "Так" : "Ні")</td>
                     <td>@(item.PersonalRating != null ? item.PersonalRating + "/10" : "-")</td>
+                    
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Ви впевнені, що хочете видалити цю книгу?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Видалити</button>
+                        </form>
+                    </td>
+             
                 </tr>
             }
         }

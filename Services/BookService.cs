@@ -38,5 +38,17 @@ namespace PersonalLibrary.Services
             books.Add(newBook);
             SaveBooks(books);
         }
+
+        public void DeleteBook(int id)
+        {
+            var books = GetAllBooks(); 
+            var bookToRemove = books.FirstOrDefault(b => b.Id == id); 
+
+            if (bookToRemove != null)
+            {
+                books.Remove(bookToRemove); 
+                SaveBooks(books); 
+            }
+        }
     }
 }
