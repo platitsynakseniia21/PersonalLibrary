@@ -8,27 +8,31 @@ namespace PersonalLibrary.Controllers
     {
         private readonly BookService _bookService;
 
-        
         public BooksController(BookService bookService)
         {
             _bookService = bookService;
         }
 
-        
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
             var books = _bookService.GetAllBooks();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+                books = books.Where(b => b.Title.ToLower().Contains(searchString) ||
+                                         b.Author.ToLower().Contains(searchString)).ToList();
+            }
+
             return View(books);
         }
 
-       
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        
         [HttpPost]
         public IActionResult Create(Book book)
         {
@@ -37,18 +41,15 @@ namespace PersonalLibrary.Controllers
                 _bookService.AddBook(book);
                 return RedirectToAction("Index");
             }
-
             return View(book);
         }
 
-        
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _bookService.DeleteBook(id); 
-            return RedirectToAction("Index"); 
+            _bookService.DeleteBook(id);
+            return RedirectToAction("Index");
         }
-
 
         [HttpGet]
         public IActionResult Edit(int id)
