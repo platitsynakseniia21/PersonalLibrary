@@ -1,7 +1,7 @@
 ﻿@model PersonalLibrary.Models.Book
 
 @{
-    ViewData["Title"] = "Додати книгу";
+    ViewData["Title"] = "Додати нову книгу";
 }
 
 <h1 class="mb-4">Додати нову книгу</h1>
@@ -24,32 +24,57 @@
 
             <div class="mb-3">
                 <label asp-for="Publisher" class="form-label fw-bold"></label>
-                <input asp-for="Publisher" class="form-control" placeholder="Необов'язково" />
+                <input asp-for="Publisher" class="form-control" />
             </div>
 
             <div class="mb-3">
                 <label asp-for="Year" class="form-label fw-bold"></label>
-                <input asp-for="Year" type="number" class="form-control" placeholder="Наприклад: 2026" />
+                <input asp-for="Year" type="number" class="form-control" />
             </div>
 
             <div class="mb-3">
                 <label asp-for="Section" class="form-label fw-bold"></label>
-                <input asp-for="Section" class="form-control" placeholder="Наприклад: Фантастика, Навчальна..." />
+                <input asp-for="Section" class="form-control" placeholder="Наприклад: Спеціальна література, Белетристика" />
                 <span asp-validation-for="Section" class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <label asp-for="Origin" class="form-label fw-bold"></label>
+                <input asp-for="Origin" class="form-control" placeholder="Наприклад: Куплено, Подаровано" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ReadStatus" class="form-label fw-bold"></label>
+                <select asp-for="ReadStatus" class="form-select">
+                    <option value="">-- Оберіть статус --</option>
+                    <option value="Прочитано">Прочитано</option>
+                    <option value="В процесі">В процесі</option>
+                    <option value="В планах">В планах</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Review" class="form-label fw-bold"></label>
+                <textarea asp-for="Review" class="form-control" rows="3" placeholder="Ваш короткий відгук..."></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="BorrowerName" class="form-label fw-bold"></label>
+                <input asp-for="BorrowerName" class="form-control" placeholder="Ім'я людини, якій дали книгу (якщо вона не вдома)" />
+            </div>
+
             <div class="mb-3 form-check">
-                <input asp-for="IsAvailable" class="form-check-input" />
+                <input asp-for="IsAvailable" class="form-check-input" checked />
                 <label asp-for="IsAvailable" class="form-check-label fw-bold"></label>
             </div>
 
             <div class="mb-4">
                 <label asp-for="PersonalRating" class="form-label fw-bold"></label>
-                <input asp-for="PersonalRating" type="number" min="1" max="10" class="form-control" placeholder="Від 1 до 10" />
+                <input asp-for="PersonalRating" type="number" min="1" max="10" class="form-control" />
                 <span asp-validation-for="PersonalRating" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-success me-2">Зберегти</button>
+            <button type="submit" class="btn btn-success me-2">Створити</button>
             <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
         </form>
     </div>
