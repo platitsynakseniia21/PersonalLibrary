@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>@(ViewBag.IsWishlist ? "🛒 Список бажаного (Wishlist)" : "📚 Моя бібліотека")</h1>
-    <a asp-action="Create" class="btn btn-primary">Додати новий запис</a>
+    <a asp-action="Create" class="btn btn-primary">Додати книгу</a>
 </div>
 
 <ul class="nav nav-tabs mb-4">
@@ -127,17 +127,80 @@
                         }
                     </td>
                     
-                    <td>
-                        <div class="d-flex flex-column gap-1">
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Деталі</a>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Редаг.</a>
-                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Видалити?');">
-                                <button type="submit" class="btn btn-sm btn-danger w-100">Видал.</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+                   <td>
+                     <div class="d-flex flex-column gap-1">
+       
+                       <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Деталі</a>
+        
+                       @if (item.AvailabilityStatus == "Вдома")
+                       {
+                        <button type="button" class="btn btn-sm btn-primary" 
+                          data-bs-toggle="modal" 
+                          data-bs-target="#borrowModal" 
+                          data-id="@item.Id">
+                          Видати
+                        </button>
+                       }
+        
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Редаг.</a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Видалити?');">
+                        <button type="submit" class="btn btn-sm btn-danger w-100">Видал.</button>
+                      </form>
+                    </div>
+                 </td>
+             </tr>
             }
         }
     </tbody>
 </table>
+
+<div class="modal fade" id="borrowModal" tabindex="-1" aria-labelledby="borrowModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="borrowModalLabel">Видача книги</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form asp-action="Edit" method="post">
+        <div class="modal-body">
+            <input type="hidden" name="Id" id="modalBookId" />
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Ім'я боржника</label>
+                <input name="BorrowerName" class="form-control" placeholder="Іван Іванов" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Контакти (телефон/Telegram)</label>
+                <input name="BorrowerContact" class="form-control" placeholder="@username або +380..." />
+            </div>
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label class="form-label fw-bold">Дата видачі</label>
+                    <input name="BorrowDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label fw-bold">Очікуване повернення</label>
+                    <input name="ExpectedReturnDate" type="date" class="form-control" required />
+                </div>
+            </div>
+            <input type="hidden" name="AvailabilityStatus" value="Видана на руки" />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+            <button type="submit" class="btn btn-danger">Підтвердити видачу</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    var borrowModal = document.getElementById('borrowModal');
+    borrowModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var bookId = button.getAttribute('data-id');
+        var inputId = borrowModal.querySelector('#modalBookId');
+        inputId.value = bookId;
+    });
+</script>

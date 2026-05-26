@@ -1,12 +1,11 @@
 ﻿@model PersonalLibrary.Models.Book
-@{ ViewData["Title"] = "Додати запис"; }
+@{ ViewData["Title"] = "Додати книгу"; }
 
-<h1 class="mb-4">Додати запис у бібліотеку</h1>
+<h1 class="mb-4">Додати книгу</h1>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" class="card p-4 shadow-sm">
     <div class="row">
         <div class="col-md-6 border-end">
-            <h4 class="text-primary mb-3">1. Основні дані</h4>
             <div class="mb-3">
                 <label asp-for="Title" class="form-label fw-bold"></label>
                 <input asp-for="Title" class="form-control" />
@@ -14,16 +13,16 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Author" class="form-label fw-bold"></label>
-                <input asp-for="Author" class="form-control" placeholder="Кілька авторів через кому" />
+                <input asp-for="Author" class="form-control" />
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="Year" class="form-label fw-bold"></label>
-                    <input asp-for="Year" type="number" class="form-control" />
+                    <input asp-for="Year" class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="PageCount" class="form-label fw-bold"></label>
-                    <input asp-for="PageCount" type="number" class="form-control" />
+                    <input asp-for="PageCount" class="form-control" />
                 </div>
             </div>
             <div class="row">
@@ -33,125 +32,46 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="ISBN" class="form-label fw-bold"></label>
-                    <input asp-for="ISBN" class="form-control" />
+                    <input asp-for="ISBN" class="form-control" placeholder="978-..." />
+                    <span asp-validation-for="ISBN" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label asp-for="CoverType" class="form-label fw-bold"></label>
-                <input asp-for="CoverType" class="form-control" placeholder="Наприклад: Тверда, М'яка, Електронна" />
             </div>
         </div>
 
         <div class="col-md-6">
-            <h4 class="text-primary mb-3">2. Категоризація та статус</h4>
             <div class="mb-3">
-                <label asp-for="Section" class="form-label fw-bold"></label>
+                <label asp-for="CoverType" class="form-label fw-bold"></label>
+                <input asp-for="CoverType" class="form-control" placeholder="Тверда, м'яка..." />
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Розділ (Жанр)</label>
                 <select asp-for="Section" class="form-select">
                     <option value="">-- Оберіть розділ --</option>
+                    <option value="Белетристика (Художня література)">Белетристика (Художня література)</option>
                     <option value="Спеціальна література">Спеціальна література</option>
                     <option value="Хобі">Хобі</option>
                     <option value="Домашнє господарство">Домашнє господарство</option>
-                    <option value="Белетристика">Белетристика</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label asp-for="Tags" class="form-label fw-bold"></label>
-                <input asp-for="Tags" class="form-control" placeholder="Наприклад: Python, фантастика, для навчання" />
+                <input asp-for="Tags" class="form-control" placeholder="Python, детектив..." />
             </div>
             <div class="mb-3">
                 <label asp-for="Origin" class="form-label fw-bold"></label>
                 <select asp-for="Origin" class="form-select">
-                    <option value="">-- Джерело появи --</option>
                     <option value="Куплено">Куплено</option>
                     <option value="Подаровано">Подаровано</option>
-                    <option value="Успадковано">Успадковано</option>
                 </select>
             </div>
-            <div class="mb-3">
-                <label asp-for="AvailabilityStatus" class="form-label fw-bold"></label>
-                <select asp-for="AvailabilityStatus" class="form-select">
-                    <option value="Вдома">Вдома</option>
-                    <option value="Видана на руки">Видана на руки</option>
-                    <option value="Втрачена">Втрачена</option>
-                    <option value="Архів">Архів (Архівувати)</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label asp-for="DateAdded" class="form-label fw-bold"></label>
-                <input asp-for="DateAdded" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-            </div>
+            <input type="hidden" asp-for="AvailabilityStatus" value="Вдома" />
+            <input type="hidden" asp-for="ReadStatus" value="В планах" />
+            <input type="hidden" asp-for="DateAdded" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
         </div>
     </div>
-
-    <hr class="my-4" />
-
-    <div class="row">
-        <div class="col-md-6 border-end">
-            <h4 class="text-success mb-3">3. Особиста оцінка</h4>
-            <div class="mb-3">
-                <label asp-for="ReadStatus" class="form-label fw-bold"></label>
-                <select asp-for="ReadStatus" class="form-select">
-                    <option value="">-- Статус --</option>
-                    <option value="Прочитано">Прочитано</option>
-                    <option value="В процесі">В процесі</option>
-                    <option value="В планах">В планах</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label asp-for="PersonalRating" class="form-label fw-bold"></label>
-                <input asp-for="PersonalRating" type="number" class="form-control" />
-                <span asp-validation-for="PersonalRating" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Review" class="form-label fw-bold"></label>
-                <textarea asp-for="Review" class="form-control" rows="4" placeholder="Короткий відгук або історія прочитання..."></textarea>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <h4 class="text-danger mb-3">4. Трекінг боржників</h4>
-            <div class="mb-3">
-                <label asp-for="BorrowerName" class="form-label fw-bold"></label>
-                <input asp-for="BorrowerName" class="form-control" placeholder="Ім'я людини, якій видана книга" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="BorrowerContact" class="form-label fw-bold"></label>
-                <input asp-for="BorrowerContact" class="form-control" placeholder="Телефон, Telegram, пошта..." />
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label asp-for="BorrowDate" class="form-label fw-bold"></label>
-                    <input asp-for="BorrowDate" type="date" class="form-control" />
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label asp-for="ExpectedReturnDate" class="form-label fw-bold"></label>
-                    <input asp-for="ExpectedReturnDate" type="date" class="form-control" />
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <hr class="my-4" />
-
-    <div class="row mb-4">
-        <div class="col-12 p-3 bg-light rounded border border-warning">
-            <h4 class="text-warning mb-3">5. Wishlist (Список бажаного)</h4>
-            <div class="form-check mb-3">
-                <input asp-for="IsWishlist" class="form-check-input" style="transform: scale(1.5); margin-right: 10px;" />
-                <label asp-for="IsWishlist" class="form-check-label fw-bold text-dark">
-                    Додати цю книгу у Wishlist (вона не відображатиметься у головній бібліотеці)
-                </label>
-            </div>
-            <div class="mb-2">
-                <label asp-for="ShopLink" class="form-label fw-bold"></label>
-                <input asp-for="ShopLink" class="form-control" placeholder="https://rozetka.com.ua/..." />
-            </div>
-        </div>
-    </div>
-
-    <div class="mb-5">
-        <button type="submit" class="btn btn-primary btn-lg me-2 px-5">Зберегти запис</button>
-        <a asp-action="Index" class="btn btn-secondary btn-lg px-4">Скасувати</a>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary btn-lg px-5">Додати книгу</button>
+        <a asp-action="Index" class="btn btn-secondary btn-lg px-4 ms-2">Скасувати</a>
     </div>
 </form>
 

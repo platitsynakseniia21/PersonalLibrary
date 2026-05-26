@@ -26,6 +26,7 @@ namespace PersonalLibrary.Models
         public int? PageCount { get; set; }
 
         [Display(Name = "ISBN")]
+        [RegularExpression(@"^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", ErrorMessage = "Невірний формат ISBN (введіть 10 або 13 цифр, можна з дефісами)")]
         public string ISBN { get; set; }
 
         [Display(Name = "Тип обкладинки")]
