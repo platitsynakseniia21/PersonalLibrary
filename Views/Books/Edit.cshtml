@@ -1,1 +1,61 @@
-﻿
+﻿@model PersonalLibrary.Models.Book
+
+@{
+    ViewData["Title"] = "Редагувати книгу";
+}
+
+<h1 class="mb-4">Редагувати книгу</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label fw-bold"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Author" class="form-label fw-bold"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Publisher" class="form-label fw-bold"></label>
+                <input asp-for="Publisher" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Year" class="form-label fw-bold"></label>
+                <input asp-for="Year" type="number" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Section" class="form-label fw-bold"></label>
+                <input asp-for="Section" class="form-control" />
+                <span asp-validation-for="Section" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="IsAvailable" class="form-check-input" />
+                <label asp-for="IsAvailable" class="form-check-label fw-bold"></label>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="PersonalRating" class="form-label fw-bold"></label>
+                <input asp-for="PersonalRating" type="number" min="1" max="10" class="form-control" />
+                <span asp-validation-for="PersonalRating" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary me-2">Зберегти зміни</button>
+            <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
