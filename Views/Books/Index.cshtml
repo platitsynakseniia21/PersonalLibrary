@@ -13,6 +13,18 @@
     <a class="btn btn-primary" asp-controller="Books" asp-action="Create">Додати нову книгу</a>
 </p>
 
+<div class="row mt-4 mb-3">
+    <div class="col-md-6">
+        <form asp-action="Index" method="get">
+            <div class="input-group">
+                <input type="text" name="searchString" class="form-control" placeholder="Пошук за назвою або автором..." />
+                <button type="submit" class="btn btn-outline-primary">Знайти</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Скинути</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 <table class="table table-striped table-hover mt-3">
     <thead class="table-dark">
         <tr>
