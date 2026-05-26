@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable disable
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PersonalLibrary.Models
@@ -7,7 +8,7 @@ namespace PersonalLibrary.Models
     {
         public int Id { get; set; }
 
-        // --- 1. Основні дані про книгу ---
+        
         [Required(ErrorMessage = "Назва обов'язкова")]
         [Display(Name = "Назва книги")]
         public string Title { get; set; }
@@ -30,14 +31,14 @@ namespace PersonalLibrary.Models
         [Display(Name = "Тип обкладинки")]
         public string CoverType { get; set; }
 
-        // --- 2. Категоризація ---
+       
         [Display(Name = "Розділ бібліотеки")]
         public string Section { get; set; }
 
         [Display(Name = "Теги (через кому)")]
         public string Tags { get; set; }
 
-        // --- 3. Походження та статус ---
+        
         [Display(Name = "Джерело появи")]
         public string Origin { get; set; }
 
@@ -45,9 +46,9 @@ namespace PersonalLibrary.Models
         public DateTime DateAdded { get; set; } = DateTime.Now;
 
         [Display(Name = "Поточна наявність")]
-        public string AvailabilityStatus { get; set; } = "Вдома"; // Варіанти: Вдома, Видана на руки, Втрачена, Архів
+        public string AvailabilityStatus { get; set; } = "Вдома";
 
-        // --- 4. Особиста оцінка ---
+       
         [Display(Name = "Статус прочитання")]
         public string ReadStatus { get; set; }
 
@@ -58,7 +59,7 @@ namespace PersonalLibrary.Models
         [Display(Name = "Відгук / Історія прочитання")]
         public string Review { get; set; }
 
-        // --- 5. Розширені дані (Боржники) ---
+       
         [Display(Name = "Кому видана (Ім'я)")]
         public string BorrowerName { get; set; }
 
@@ -71,7 +72,7 @@ namespace PersonalLibrary.Models
         [Display(Name = "Очікувана дата повернення")]
         public DateTime? ExpectedReturnDate { get; set; }
 
-        // --- 6. Wishlist (Список бажаного) ---
+        
         public bool IsWishlist { get; set; } = false;
 
         [Display(Name = "Посилання на магазин")]
