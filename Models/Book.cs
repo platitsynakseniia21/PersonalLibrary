@@ -31,7 +31,7 @@ namespace PersonalLibrary.Models
         [Range(1, 10, ErrorMessage = "Оцінка має бути від 1 до 10")]
         public int? PersonalRating { get; set; }
 
-        // --- ПОЛЯ СТРОГО ИЗ ТВОЕЙ АНКЕТЫ ---
+       
 
         [Display(Name = "Джерело появи (куплено, подаровано)")]
         public string? Origin { get; set; }
