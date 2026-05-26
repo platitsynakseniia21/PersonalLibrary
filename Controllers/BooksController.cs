@@ -13,18 +13,41 @@ namespace PersonalLibrary.Controllers
             _bookService = bookService;
         }
 
-        public IActionResult Index(string searchString)
+        public IActionResult Index(string searchString, string sectionFilter, string statusFilter, bool isWishlist = false)
         {
-            var books = _bookService.GetAllBooks();
+            // Отримуємо всі книги з JSON
+            var books = GetBooks();
+            var query = books.AsEnumerable();
 
+            // 1. Окремий розділ: Фільтруємо Wishlist або Основну бібліотеку
+            query = query.Where(b => b.IsWishlist == isWishlist);
+
+            // 2. Розширений пошук (Перетин фільтрів)
             if (!string.IsNullOrEmpty(searchString))
             {
-                searchString = searchString.ToLower();
-                books = books.Where(b => b.Title.ToLower().Contains(searchString) ||
-                                         b.Author.ToLower().Contains(searchString)).ToList();
+                query = query.Where(b =>
+                    (!string.IsNullOrEmpty(b.Title) && b.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase)) ||
+                    (!string.IsNullOrEmpty(b.Author) && b.Author.Contains(searchString, StringComparison.OrdinalIgnoreCase)) ||
+                    (!string.IsNullOrEmpty(b.Tags) && b.Tags.Contains(searchString, StringComparison.OrdinalIgnoreCase)));
             }
 
-            return View(books);
+            if (!string.IsNullOrEmpty(sectionFilter))
+            {
+                query = query.Where(b => b.Section == sectionFilter);
+            }
+
+            if (!string.IsNullOrEmpty(statusFilter))
+            {
+                query = query.Where(b => b.ReadStatus == statusFilter);
+            }
+
+           
+            ViewBag.CurrentSearch = searchString;
+            ViewBag.CurrentSection = sectionFilter;
+            ViewBag.CurrentStatus = statusFilter;
+            ViewBag.IsWishlist = isWishlist;
+
+            return View(query.ToList());
         }
 
         [HttpGet]
