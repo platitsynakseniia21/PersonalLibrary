@@ -1,0 +1,73 @@
+﻿@model List<KeyValuePair<string, int>>
+
+@{
+    ViewData["Title"] = "Інвентаризація бібліотеки";
+    int total = ViewBag.TotalBooks;
+    int read = ViewBag.ReadBooks;
+    double readPercentage = total > 0 ? Math.Round((double)read / total * 100, 1) : 0;
+}
+
+<h1 class="mb-4">Інвентаризація бібліотеки</h1>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card bg-light p-3 h-100">
+            <h6 class="text-muted">Всього книг</h6>
+            <p class="fs-2 fw-bold text-primary mb-0">@total</p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card bg-light p-3 h-100">
+            <h6 class="text-muted">Прочитано</h6>
+            <p class="fs-2 fw-bold text-success mb-0">@read <span class="fs-5 text-muted">(@readPercentage%)</span></p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card bg-light p-3 h-100">
+            <h6 class="text-muted">В процесі / В планах</h6>
+            <p class="fs-2 fw-bold text-warning mb-0">@(ViewBag.InProcessBooks + ViewBag.PlannedBooks)</p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card bg-light p-3 h-100">
+            <h6 class="text-muted">Книг у боржників</h6>
+            <p class="fs-2 fw-bold text-danger mb-0">@ViewBag.BorrowedBooks</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h4 class="mb-3">Розподіл за розділами</h4>
+            @if (!Model.Any())
+            {
+                <p class="text-muted mb-0">Книг поки немає.</p>
+            }
+            else
+            {
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Розділ бібліотеки</th>
+                            <th class="text-end">Кількість</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Key</td>
+                                <td class="text-end fw-bold">@item.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Назад до списку</a>
+</div>

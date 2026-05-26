@@ -72,5 +72,29 @@ namespace PersonalLibrary.Controllers
             }
             return View(book);
         }
+
+        [HttpGet]
+        public IActionResult Inventory()
+        {
+            var books = _bookService.GetAllBooks();
+
+            
+
+            ViewBag.TotalBooks = books.Count;
+            ViewBag.ReadBooks = books.Count(b => b.ReadStatus == "Прочитано");
+            ViewBag.InProcessBooks = books.Count(b => b.ReadStatus == "В процесі");
+            ViewBag.PlannedBooks = books.Count(b => b.ReadStatus == "В планах");
+            ViewBag.BorrowedBooks = books.Count(b => !b.IsAvailable || !string.IsNullOrEmpty(b.BorrowerName));
+
+            
+
+            var sectionStats = books
+                .GroupBy(b => b.Section)
+                .Select(g => new KeyValuePair<string, int>(string.IsNullOrEmpty(g.Key) ? "Без розділу" : g.Key, g.Count()))
+                .ToList();
+
+            return View(sectionStats);
+        }
+
     }
 }
