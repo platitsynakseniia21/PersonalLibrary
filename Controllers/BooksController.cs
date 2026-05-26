@@ -48,5 +48,28 @@ namespace PersonalLibrary.Controllers
             _bookService.DeleteBook(id); 
             return RedirectToAction("Index"); 
         }
+
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var book = _bookService.GetBookById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Book book)
+        {
+            if (ModelState.IsValid)
+            {
+                _bookService.UpdateBook(book);
+                return RedirectToAction("Index");
+            }
+            return View(book);
+        }
     }
 }

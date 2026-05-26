@@ -75,7 +75,7 @@ namespace PersonalLibrary.Services
 
 
         
-        [HttpGet]
+       
         public IActionResult Edit(int id)
         {
             var book = _bookService.GetBookById(id);
@@ -87,7 +87,7 @@ namespace PersonalLibrary.Services
         }
 
        
-        [HttpPost]
+        
         public IActionResult Edit(Book book)
         {
             if (ModelState.IsValid)
