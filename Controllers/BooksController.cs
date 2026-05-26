@@ -15,14 +15,12 @@ namespace PersonalLibrary.Controllers
 
         public IActionResult Index(string searchString, string sectionFilter, string statusFilter, bool isWishlist = false)
         {
-            // Отримуємо всі книги з JSON
-            var books = GetBooks();
+
+            var books = _bookService.GetAllBooks();
             var query = books.AsEnumerable();
 
-            // 1. Окремий розділ: Фільтруємо Wishlist або Основну бібліотеку
             query = query.Where(b => b.IsWishlist == isWishlist);
 
-            // 2. Розширений пошук (Перетин фільтрів)
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = query.Where(b =>
@@ -32,16 +30,11 @@ namespace PersonalLibrary.Controllers
             }
 
             if (!string.IsNullOrEmpty(sectionFilter))
-            {
                 query = query.Where(b => b.Section == sectionFilter);
-            }
 
             if (!string.IsNullOrEmpty(statusFilter))
-            {
                 query = query.Where(b => b.ReadStatus == statusFilter);
-            }
 
-           
             ViewBag.CurrentSearch = searchString;
             ViewBag.CurrentSection = sectionFilter;
             ViewBag.CurrentStatus = statusFilter;
