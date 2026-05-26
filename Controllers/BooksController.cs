@@ -96,9 +96,9 @@ namespace PersonalLibrary.Controllers
             ViewBag.ReadBooks = books.Count(b => b.ReadStatus == "Прочитано");
             ViewBag.InProcessBooks = books.Count(b => b.ReadStatus == "В процесі");
             ViewBag.PlannedBooks = books.Count(b => b.ReadStatus == "В планах");
-            ViewBag.BorrowedBooks = books.Count(b => !b.IsAvailable || !string.IsNullOrEmpty(b.BorrowerName));
+            ViewBag.BorrowedBooks = books.Count(b => b.AvailabilityStatus == "Видана на руки");
 
-            
+
 
             var sectionStats = books
                 .GroupBy(b => b.Section)

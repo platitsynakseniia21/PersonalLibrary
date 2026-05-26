@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-6">
                 <p><strong>Статус:</strong> @(string.IsNullOrEmpty(Model.ReadStatus) ? "—" : Model.ReadStatus)</p>
-                <p><strong>В наявності вдома:</strong> @(Model.IsAvailable ? "Так" : "Ні")</p>
+                <p><strong>Поточна наявність:</strong> @Model.AvailabilityStatus</p>
                 <p><strong>Кому видана (Боржник):</strong> @(string.IsNullOrEmpty(Model.BorrowerName) ? "—" : Model.BorrowerName)</p>
                 <p><strong>Особиста оцінка:</strong> @(Model.PersonalRating.HasValue ? Model.PersonalRating + "/10" : "—")</p>
             </div>
