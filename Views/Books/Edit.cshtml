@@ -39,6 +39,31 @@
                 <span asp-validation-for="Section" class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <label asp-for="Origin" class="form-label fw-bold"></label>
+                <input asp-for="Origin" class="form-control" placeholder="Наприклад: Куплено, Подаровано" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ReadStatus" class="form-label fw-bold"></label>
+                <select asp-for="ReadStatus" class="form-select">
+                    <option value="">-- Оберіть статус --</option>
+                    <option value="Прочитано">Прочитано</option>
+                    <option value="В процесі">В процесі</option>
+                    <option value="В планах">В планах</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Review" class="form-label fw-bold"></label>
+                <textarea asp-for="Review" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="BorrowerName" class="form-label fw-bold"></label>
+                <input asp-for="BorrowerName" class="form-control" placeholder="Ім'я людини, якій дали книгу" />
+            </div>
+
             <div class="mb-3 form-check">
                 <input asp-for="IsAvailable" class="form-check-input" />
                 <label asp-for="IsAvailable" class="form-check-label fw-bold"></label>
@@ -46,7 +71,7 @@
 
             <div class="mb-4">
                 <label asp-for="PersonalRating" class="form-label fw-bold"></label>
-                <input asp-for="PersonalRating" type="number" min="1" max="10" class="form-control" />
+                <input asp-for="PersonalRating" type="number" class="form-control" />
                 <span asp-validation-for="PersonalRating" class="text-danger"></span>
             </div>
 
