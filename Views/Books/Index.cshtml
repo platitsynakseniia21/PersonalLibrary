@@ -72,6 +72,8 @@
                     <td>@(item.PersonalRating.HasValue ? item.PersonalRating + "/10" : "—")</td>
                     <td>
                         <div class="d-flex">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info me-2 text-white">Деталі</a>
+                            
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-2">Редагувати</a>
                             
                             <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Ви впевнені, що хочете видалити цю книгу?');">

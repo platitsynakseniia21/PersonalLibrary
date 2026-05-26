@@ -1,0 +1,44 @@
+﻿@model PersonalLibrary.Models.Book
+
+@{
+    ViewData["Title"] = "Деталі книги";
+}
+
+<h1 class="mb-4">Детальна інформація</h1>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-white">
+        <h3 class="mb-0">@Model.Title</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Автор:</strong> @Model.Author</p>
+                <p><strong>Розділ:</strong> @Model.Section</p>
+                <p><strong>Видавництво:</strong> @(string.IsNullOrEmpty(Model.Publisher) ? "—" : Model.Publisher)</p>
+                <p><strong>Рік видання:</strong> @(Model.Year.HasValue ? Model.Year : "—")</p>
+                <p><strong>Джерело появи:</strong> @(string.IsNullOrEmpty(Model.Origin) ? "—" : Model.Origin)</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Статус:</strong> @(string.IsNullOrEmpty(Model.ReadStatus) ? "—" : Model.ReadStatus)</p>
+                <p><strong>В наявності вдома:</strong> @(Model.IsAvailable ? "Так" : "Ні")</p>
+                <p><strong>Кому видана (Боржник):</strong> @(string.IsNullOrEmpty(Model.BorrowerName) ? "—" : Model.BorrowerName)</p>
+                <p><strong>Особиста оцінка:</strong> @(Model.PersonalRating.HasValue ? Model.PersonalRating + "/10" : "—")</p>
+            </div>
+        </div>
+        
+        <hr />
+        
+        <div class="mt-3">
+            <h5>Мій відгук / Нотатки:</h5>
+            <div class="p-3 bg-light rounded">
+                @(string.IsNullOrEmpty(Model.Review) ? "Відгук поки не додано." : Model.Review)
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Редагувати</a>
+    <a asp-action="Index" class="btn btn-secondary">Повернутися до списку</a>
+</div>

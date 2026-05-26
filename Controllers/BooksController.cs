@@ -28,6 +28,18 @@ namespace PersonalLibrary.Controllers
         }
 
         [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var book = _bookService.GetBookById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
+        }
+
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
