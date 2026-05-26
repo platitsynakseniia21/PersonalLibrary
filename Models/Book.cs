@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PersonalLibrary.Models
 {
@@ -6,43 +7,74 @@ namespace PersonalLibrary.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Назва книги обов'язкова")]
+        // --- 1. Основні дані про книгу ---
+        [Required(ErrorMessage = "Назва обов'язкова")]
         [Display(Name = "Назва книги")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Автор обов'язковий")]
-        [Display(Name = "Автор")]
+        [Display(Name = "Автор(и)")]
         public string Author { get; set; }
 
         [Display(Name = "Видавництво")]
-        public string? Publisher { get; set; }
+        public string Publisher { get; set; }
 
         [Display(Name = "Рік видання")]
         public int? Year { get; set; }
 
-        [Required(ErrorMessage = "Вкажіть розділ")]
-        [Display(Name = "Розділ (Спеціальна, Белетристика тощо)")]
+        [Display(Name = "Кількість сторінок")]
+        public int? PageCount { get; set; }
+
+        [Display(Name = "ISBN")]
+        public string ISBN { get; set; }
+
+        [Display(Name = "Тип обкладинки")]
+        public string CoverType { get; set; }
+
+        // --- 2. Категоризація ---
+        [Display(Name = "Розділ бібліотеки")]
         public string Section { get; set; }
 
-        [Display(Name = "В наявності вдома")]
-        public bool IsAvailable { get; set; }
+        [Display(Name = "Теги (через кому)")]
+        public string Tags { get; set; }
+
+        // --- 3. Походження та статус ---
+        [Display(Name = "Джерело появи")]
+        public string Origin { get; set; }
+
+        [Display(Name = "Дата додавання в бібліотеку")]
+        public DateTime DateAdded { get; set; } = DateTime.Now;
+
+        [Display(Name = "Поточна наявність")]
+        public string AvailabilityStatus { get; set; } = "Вдома"; // Варіанти: Вдома, Видана на руки, Втрачена, Архів
+
+        // --- 4. Особиста оцінка ---
+        [Display(Name = "Статус прочитання")]
+        public string ReadStatus { get; set; }
 
         [Display(Name = "Особиста оцінка (1-10)")]
         [Range(1, 10, ErrorMessage = "Оцінка має бути від 1 до 10")]
         public int? PersonalRating { get; set; }
 
-       
+        [Display(Name = "Відгук / Історія прочитання")]
+        public string Review { get; set; }
 
-        [Display(Name = "Джерело появи (куплено, подаровано)")]
-        public string? Origin { get; set; }
+        // --- 5. Розширені дані (Боржники) ---
+        [Display(Name = "Кому видана (Ім'я)")]
+        public string BorrowerName { get; set; }
 
-        [Display(Name = "Статус прочитання")]
-        public string? ReadStatus { get; set; }
+        [Display(Name = "Контакти боржника")]
+        public string BorrowerContact { get; set; }
 
-        [Display(Name = "Короткий відгук")]
-        public string? Review { get; set; }
+        [Display(Name = "Дата видачі")]
+        public DateTime? BorrowDate { get; set; }
 
-        [Display(Name = "Кому видана книга (Боржник)")]
-        public string? BorrowerName { get; set; }
+        [Display(Name = "Очікувана дата повернення")]
+        public DateTime? ExpectedReturnDate { get; set; }
+
+        // --- 6. Wishlist (Список бажаного) ---
+        public bool IsWishlist { get; set; } = false;
+
+        [Display(Name = "Посилання на магазин")]
+        public string ShopLink { get; set; }
     }
 }
