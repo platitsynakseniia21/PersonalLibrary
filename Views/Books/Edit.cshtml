@@ -29,7 +29,10 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="Year" class="form-label fw-bold"></label>
-                    <input asp-for="Year" type="number" class="form-control" />
+                    <input asp-for="Year" type="number" min="1000" max="2026" class="form-control" 
+                           data-msg-max="Рік має бути не більшим за 2026."
+                           data-msg-min="Рік має бути не меншим за 1000."
+                           data-msg-number="Будь ласка, введіть коректне число." />
                     <span asp-validation-for="Year" class="text-danger fw-bold"></span>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -58,13 +61,21 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Section" class="form-label fw-bold"></label>
-                <select asp-for="Section" class="form-select">
-                    <option value="">-- Оберіть розділ --</option>
-                    <option value="Белетристика (Художня література)">Белетристика (Художня література)</option>
-                    <option value="Спеціальна література">Спеціальна література</option>
-                    <option value="Хобі">Хобі</option>
-                    <option value="Домашнє господарство">Домашнє господарство</option>
-                </select>
+              <select asp-for="Section" class="form-select">
+                <option value="">-- Оберіть розділ --</option>
+                <option value="Любовні романи">Любовні романи</option>
+                <option value="Трилери">Трилери</option>
+                <option value="Детективи">Детективи</option>
+                <option value="Фентезі">Фентезі</option>
+                <option value="Наукова фантастика">Наукова фантастика</option>
+                <option value="Реалізм">Реалізм</option>
+                <option value="Містика">Містика</option>
+                <option value="Драма">Драма</option>
+                <option value="Пригодницька література">Пригодницька література</option>
+                <option value="Трагедія">Трагедія</option>
+                <option value="Комедія">Комедія</option>
+                <option value="Дарк-романи">Дарк-романи</option>
+              </select>
                 <span asp-validation-for="Section" class="text-danger fw-bold"></span>
             </div>
             <div class="mb-3">

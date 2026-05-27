@@ -29,11 +29,19 @@
         <div class="col-md-3">
             <label class="form-label fw-bold">Розділ</label>
             <select name="sectionFilter" class="form-select">
-                <option value="">-- Всі розділи --</option>
-                <option value="Спеціальна література" selected="@(ViewBag.CurrentSection == "Спеціальна література")">Спеціальна література</option>
-                <option value="Хобі" selected="@(ViewBag.CurrentSection == "Хобі")">Хобі</option>
-                <option value="Домашнє господарство" selected="@(ViewBag.CurrentSection == "Домашнє господарство")">Домашнє господарство</option>
-                <option value="Белетристика" selected="@(ViewBag.CurrentSection == "Белетристика")">Белетристика</option>
+                 <option value="">-- Всі розділи --</option>
+                 <option value="Любовні романи" selected="@(ViewBag.CurrentSection == "Любовні романи")">Любовні романи</option>
+                 <option value="Трилери" selected="@(ViewBag.CurrentSection == "Трилери")">Трилери</option>
+                 <option value="Детективи" selected="@(ViewBag.CurrentSection == "Детективи")">Детективи</option>
+                 <option value="Фентезі" selected="@(ViewBag.CurrentSection == "Фентезі")">Фентезі</option>
+                 <option value="Наукова фантастика" selected="@(ViewBag.CurrentSection == "Наукова фантастика")">Наукова фантастика</option>
+                 <option value="Реалізм" selected="@(ViewBag.CurrentSection == "Реалізм")">Реалізм</option>
+                 <option value="Містика" selected="@(ViewBag.CurrentSection == "Містика")">Містика</option>
+                 <option value="Драма" selected="@(ViewBag.CurrentSection == "Драма")">Драма</option>
+                 <option value="Пригодницька література" selected="@(ViewBag.CurrentSection == "Пригодницька література")">Пригодницька література</option>
+                 <option value="Трагедія" selected="@(ViewBag.CurrentSection == "Трагедія")">Трагедія</option>
+                 <option value="Комедія" selected="@(ViewBag.CurrentSection == "Комедія")">Комедія</option>
+                 <option value="Дарк-романи" selected="@(ViewBag.CurrentSection == "Дарк-романи")">Дарк-романи</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -152,7 +160,7 @@
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label fw-bold">Очікуване повернення</label>
-                    <input name="ExpectedReturnDate" type="date" class="form-control" required />
+                    <input name="ExpectedReturnDate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                 </div>
             </div>
             <input type="hidden" name="AvailabilityStatus" value="Видана на руки" />

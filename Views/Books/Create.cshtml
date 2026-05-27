@@ -5,8 +5,7 @@
 
 <form asp-action="Create" method="post" class="card p-4 shadow-sm">
     <div class="row">
-        
-        <div class="col-md-6 border-end">
+        <div class="col-md-6 border-end pe-4">
             <div class="mb-3">
                 <label asp-for="Title" class="form-label fw-bold"></label>
                 <input asp-for="Title" class="form-control" />
@@ -20,12 +19,16 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="Year" class="form-label fw-bold"></label>
-                    <input asp-for="Year" type="number" class="form-control" />
+                    <input asp-for="Year" type="number" min="1000" max="2026" class="form-control" 
+                           data-msg-max="Рік має бути не більшим за 2026."
+                           data-msg-min="Рік має бути не меншим за 1000."
+                           data-msg-number="Будь ласка, введіть коректне число." />
                     <span asp-validation-for="Year" class="text-danger fw-bold"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="PageCount" class="form-label fw-bold"></label>
-                    <input asp-for="PageCount" type="number" class="form-control" />
+                    <input asp-for="PageCount" type="number" min="1" class="form-control" 
+                           data-val-number="Введіть коректне число." />
                 </div>
             </div>
             <div class="row">
@@ -39,10 +42,7 @@
                     <span asp-validation-for="ISBN" class="text-danger fw-bold"></span>
                 </div>
             </div>
-        </div>
-
-        
-        <div class="col-md-6">
+        </div> <div class="col-md-6 ps-4">
             <div class="mb-3">
                 <label asp-for="CoverType" class="form-label fw-bold"></label>
                 <input asp-for="CoverType" class="form-control" placeholder="Тверда, м'яка..." />
@@ -51,16 +51,24 @@
                 <label asp-for="Section" class="form-label fw-bold"></label>
                 <select asp-for="Section" class="form-select">
                     <option value="">-- Оберіть розділ --</option>
-                    <option value="Белетристика (Художня література)">Белетристика (Художня література)</option>
-                    <option value="Спеціальна література">Спеціальна література</option>
-                    <option value="Хобі">Хобі</option>
-                    <option value="Домашнє господарство">Домашнє господарство</option>
+                    <option value="Любовні романи">Любовні романи</option>
+                    <option value="Трилери">Трилери</option>
+                    <option value="Детективи">Детективи</option>
+                    <option value="Фентезі">Фентезі</option>
+                    <option value="Наукова фантастика">Наукова фантастика</option>
+                    <option value="Реалізм">Реалізм</option>
+                    <option value="Містика">Містика</option>
+                    <option value="Драма">Драма</option>
+                    <option value="Пригодницька література">Пригодницька література</option>
+                    <option value="Трагедія">Трагедія</option>
+                    <option value="Комедія">Комедія</option>
+                    <option value="Дарк-романи">Дарк-романи</option>
                 </select>
                 <span asp-validation-for="Section" class="text-danger fw-bold"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Tags" class="form-label fw-bold"></label>
-                <input asp-for="Tags" class="form-control" placeholder="Python, детектив..." />
+                <input asp-for="Tags" class="form-control" placeholder="Наприклад: детектив, психологія..." />
             </div>
             <div class="mb-3">
                 <label asp-for="Origin" class="form-label fw-bold"></label>
@@ -71,7 +79,6 @@
                 </select>
             </div>
 
-           
             <div class="p-3 bg-light rounded border border-warning mt-4">
                 <h5 class="text-warning mb-3">Wishlist (Список бажаного)</h5>
                 <div class="form-check mb-2">
@@ -86,7 +93,6 @@
                 </div>
             </div>
 
-           
             <input type="hidden" asp-for="AvailabilityStatus" value="Вдома" />
             <input type="hidden" asp-for="ReadStatus" value="В планах" />
         </div>

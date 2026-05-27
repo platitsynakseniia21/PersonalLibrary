@@ -21,7 +21,8 @@ namespace PersonalLibrary.Models
 
         [Required(ErrorMessage = "Вкажіть рік видання!")]
         [Display(Name = "Рік видання")]
-        public int? Year { get; set; }
+        [Range(1000, 2026, ErrorMessage = "Будь ласка, введіть реальний рік (від 1000 до 2026)")]
+        public int Year { get; set; }
 
         [Display(Name = "Кількість сторінок")]
         public int? PageCount { get; set; }
