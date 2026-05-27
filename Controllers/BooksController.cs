@@ -92,7 +92,7 @@ namespace PersonalLibrary.Controllers
         {
             var book = _bookService.GetBookById(id);
             if (book == null) return NotFound();
-            return View(book);
+            return View("~/Views/Books/Edit.cshtml", book);
         }
 
         [HttpPost]
