@@ -141,7 +141,7 @@
         <h5 class="modal-title" id="borrowModalLabel">Видача книги</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form asp-action="IssueBook" method="post">
+      <form asp-action="IssueBook" method="post" novalidate>
         <div class="modal-body">
             <input type="hidden" name="Id" id="modalBookId" />
             
@@ -149,24 +149,32 @@
                 <label class="form-label fw-bold">Ім'я боржника</label>
                 <input type="text" name="BorrowerName" class="form-control" 
                            data-val="true" 
-                           data-val-required="Помилка: обов'язково введіть ім'я!" />
+                           data-val-required="Обов'язково введіть ім'я!" />
                 <span class="text-danger fw-bold field-validation-valid" data-valmsg-for="BorrowerName" data-valmsg-replace="true"></span>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Контакти (телефон/Telegram)</label>
                 <input type="text" name="BorrowerContact" class="form-control" 
                            data-val="true" 
-                           data-val-required="Помилка: обов'язково вкажіть контакти!" />
+                           data-val-required="Обов'язково вкажіть контакти!" />
                 <span class="text-danger fw-bold field-validation-valid" data-valmsg-for="BorrowerContact" data-valmsg-replace="true"></span>
             </div>
             <div class="row">
                 <div class="col-6 mb-3">
                     <label class="form-label fw-bold">Дата видачі</label>
-                    <input name="BorrowDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <input type="date" name="IssueDate" class="form-control" 
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")" 
+                           data-val="true" 
+                           data-val-required="Оберіть дату видачі!" />
+                    <span class="text-danger fw-bold field-validation-valid" data-valmsg-for="IssueDate" data-valmsg-replace="true"></span>
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label fw-bold">Очікуване повернення</label>
-                    <input name="ExpectedReturnDate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                    <input type="date" name="ExpectedReturnDate" class="form-control" 
+                         min="@DateTime.Now.ToString("yyyy-MM-dd")"
+                         data-val="true" 
+                         data-val-required="Оберіть дату повернення!" />
+                   <span class="text-danger fw-bold field-validation-valid" data-valmsg-for="ExpectedReturnDate" data-valmsg-replace="true"></span>
                 </div>
             </div>
             <input type="hidden" name="AvailabilityStatus" value="Видана на руки" />
@@ -189,3 +197,8 @@
         inputId.value = bookId;
     });
 </script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
