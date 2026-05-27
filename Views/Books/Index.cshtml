@@ -147,11 +147,17 @@
             
             <div class="mb-3">
                 <label class="form-label fw-bold">Ім'я боржника</label>
-                <input name="BorrowerName" class="form-control" placeholder="Іван Іванов" required />
+                <input type="text" name="BorrowerName" class="form-control" 
+                           data-val="true" 
+                           data-val-required="Помилка: обов'язково введіть ім'я!" />
+                <span class="text-danger fw-bold field-validation-valid" data-valmsg-for="BorrowerName" data-valmsg-replace="true"></span>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Контакти (телефон/Telegram)</label>
-                <input name="BorrowerContact" class="form-control" placeholder="username або +380..." />
+                <input type="text" name="BorrowerContact" class="form-control" 
+                           data-val="true" 
+                           data-val-required="Помилка: обов'язково вкажіть контакти!" />
+                <span class="text-danger fw-bold field-validation-valid" data-valmsg-for="BorrowerContact" data-valmsg-replace="true"></span>
             </div>
             <div class="row">
                 <div class="col-6 mb-3">

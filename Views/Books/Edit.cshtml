@@ -110,7 +110,10 @@
             </div>
             <div class="mb-3">
                 <label asp-for="PersonalRating" class="form-label fw-bold"></label>
-                <input asp-for="PersonalRating" type="number" class="form-control" placeholder="1-10" />
+                <input asp-for="PersonalRating" type="number" min="1" max="10" class="form-control"
+                         data-msg-number="Будь ласка, введіть коректне число."
+                         data-msg-max="Оцінка не може бути більшою за 10."
+                         data-msg-min="Оцінка не може бути меншою за 1." />
                 <span asp-validation-for="PersonalRating" class="text-danger fw-bold"></span>
             </div>
             <div class="mb-3">
