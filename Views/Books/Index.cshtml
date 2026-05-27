@@ -58,6 +58,7 @@
             <th>Назва</th>
             <th>Автор</th>
             <th>Розділ / Теги</th>
+            <th>Статус</th>
             <th>Оцінка</th>
             <th>Наявність</th>
             <th>Трекінг Боржників</th>
@@ -65,92 +66,63 @@
         </tr>
     </thead>
     <tbody>
-        @if (!Model.Any())
-        {
-            <tr><td colspan="7" class="text-center text-muted py-4">Записів не знайдено.</td></tr>
-        }
-        else
-        {
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td class="fw-bold">
-                        @item.Title
-                        @if(ViewBag.IsWishlist && !string.IsNullOrEmpty(item.ShopLink)) 
-                        { 
-                            <br/><a href="@item.ShopLink" target="_blank" class="badge bg-primary text-decoration-none mt-1">Купити в магазині</a> 
-                        }
-                    </td>
-                    <td>@item.Author</td>
-                    <td>
-                        <span class="badge bg-info text-dark">@item.Section</span>
-                        <br/><small class="text-muted">@item.Tags</small>
-                    </td>
-                    <td>
-                        @if (item.ReadStatus == "Прочитано") { <span class="badge bg-success mb-1">Прочитано</span><br/> }
-                        else if (item.ReadStatus == "В процесі") { <span class="badge bg-warning text-dark mb-1">В процесі</span><br/> }
-                        else if (item.ReadStatus == "В планах") { <span class="badge bg-secondary mb-1">В планах</span><br/> }
-                        
-                        @if (item.PersonalRating.HasValue) { <strong>@item.PersonalRating / 10</strong> }
-                    </td>
-                    <td>
-                        @if (item.AvailabilityStatus == "Вдома") { <span class="text-success fw-bold">Вдома</span> }
-                        else if (item.AvailabilityStatus == "Видана на руки") { <span class="text-danger fw-bold">Видана</span> }
-                        else if (item.AvailabilityStatus == "Архів") { <span class="text-muted">Архів</span> }
-                        else { <span>@item.AvailabilityStatus</span> }
-                    </td>
-                    
-                    <td>
-                        @if (item.AvailabilityStatus == "Видана на руки" && !string.IsNullOrEmpty(item.BorrowerName))
-                        {
-                            <strong>@item.BorrowerName</strong><br/>
-                            if (item.ExpectedReturnDate.HasValue)
-                            {
-                                var daysLeft = (item.ExpectedReturnDate.Value - DateTime.Now.Date).Days;
-                                if (daysLeft < 0)
-                                {
-                                    <span class="badge bg-danger mt-1">Прострочено на @Math.Abs(daysLeft) днів!</span>
-                                }
-                                else if (daysLeft == 0)
-                                {
-                                    <span class="badge bg-warning text-dark mt-1">Повернути сьогодні!</span>
-                                }
-                                else
-                                {
-                                    <small class="text-muted">До повернення: @daysLeft днів</small>
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                    </td>
-                    
-                   <td>
-                     <div class="d-flex flex-column gap-1">
-       
-                       <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Деталі</a>
+       @foreach (var item in Model) {
+    <tr>
+        <td class="fw-bold">@item.Title</td>
+        <td>@item.Author</td>
+        <td>
+            <span class="badge bg-info text-dark">@item.Section</span>
+            <br/><small class="text-muted">@item.Tags</small>
+        </td>
+        <td>
+            @if(item.ReadStatus == "Прочитано") { <span class="badge bg-success">Прочитано</span> }
+            else if(item.ReadStatus == "В процесі") { <span class="badge bg-warning text-dark">В процесі</span> }
+            else { <span class="badge bg-secondary">В планах</span> }
+        </td>
+        <td><strong>@(item.PersonalRating ?? 0) / 10</strong></td>
         
-                       @if (item.AvailabilityStatus == "Вдома")
-                       {
-                        <button type="button" class="btn btn-sm btn-primary" 
-                          data-bs-toggle="modal" 
-                          data-bs-target="#borrowModal" 
-                          data-id="@item.Id">
-                          Видати
-                        </button>
-                       }
-        
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Редаг.</a>
-                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Видалити?');">
-                        <button type="submit" class="btn btn-sm btn-danger w-100">Видал.</button>
-                      </form>
-                    </div>
-                 </td>
-             </tr>
+        <td>
+            @if(item.AvailabilityStatus == "Вдома") { 
+                <span class="text-success fw-bold">Так</span> 
             }
-        }
+            else if(item.AvailabilityStatus == "Відсутня") { 
+                <span class="text-secondary fw-bold">Немає</span> 
+            }
+            else { 
+                <span class="text-danger fw-bold">Видана</span>
+                @if (item.ExpectedReturnDate < DateTime.Today) {
+                    <br/><span class="badge bg-danger">Прострочено!</span> 
+                }
+            }
+       </td>
+
+        <td>
+            @if(item.AvailabilityStatus == "Видана на руки") {
+                <strong>@item.BorrowerName</strong><br/>
+                <small class="text-muted">Повернути до: @item.ExpectedReturnDate?.ToString("dd.MM")</small>
+            } else { <span>—</span> }
+        </td>
+        <td>
+            <div class="d-flex flex-column gap-1">
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Деталі</a>
+                
+                @if (item.AvailabilityStatus == "Вдома" && !item.IsWishlist) {
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#borrowModal" data-id="@item.Id">Видати</button>
+                }
+                else if (item.AvailabilityStatus == "Видана на руки") {
+                    <form asp-action="ReturnBook" asp-route-id="@item.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-success w-100">Повернути</button>
+                    </form>
+                }
+
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Редаг.</a>
+                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Видалити?');">
+                    <button type="submit" class="btn btn-sm btn-danger w-100">Видал.</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    }
     </tbody>
 </table>
 
@@ -161,7 +133,7 @@
         <h5 class="modal-title" id="borrowModalLabel">Видача книги</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form asp-action="Edit" method="post">
+      <form asp-action="IssueBook" method="post">
         <div class="modal-body">
             <input type="hidden" name="Id" id="modalBookId" />
             
@@ -193,7 +165,6 @@
     </div>
   </div>
 </div>
-
 
 <script>
     var borrowModal = document.getElementById('borrowModal');

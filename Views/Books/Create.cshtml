@@ -5,24 +5,27 @@
 
 <form asp-action="Create" method="post" class="card p-4 shadow-sm">
     <div class="row">
+        
         <div class="col-md-6 border-end">
             <div class="mb-3">
                 <label asp-for="Title" class="form-label fw-bold"></label>
                 <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <span asp-validation-for="Title" class="text-danger fw-bold"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Author" class="form-label fw-bold"></label>
                 <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger fw-bold"></span>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="Year" class="form-label fw-bold"></label>
-                    <input asp-for="Year" class="form-control" />
+                    <input asp-for="Year" type="number" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger fw-bold"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="PageCount" class="form-label fw-bold"></label>
-                    <input asp-for="PageCount" class="form-control" />
+                    <input asp-for="PageCount" type="number" class="form-control" />
                 </div>
             </div>
             <div class="row">
@@ -33,18 +36,19 @@
                 <div class="col-md-6 mb-3">
                     <label asp-for="ISBN" class="form-label fw-bold"></label>
                     <input asp-for="ISBN" class="form-control" placeholder="978-..." />
-                    <span asp-validation-for="ISBN" class="text-danger"></span>
+                    <span asp-validation-for="ISBN" class="text-danger fw-bold"></span>
                 </div>
             </div>
         </div>
 
+        
         <div class="col-md-6">
             <div class="mb-3">
                 <label asp-for="CoverType" class="form-label fw-bold"></label>
                 <input asp-for="CoverType" class="form-control" placeholder="Тверда, м'яка..." />
             </div>
             <div class="mb-3">
-                <label class="form-label fw-bold">Розділ (Жанр)</label>
+                <label asp-for="Section" class="form-label fw-bold"></label>
                 <select asp-for="Section" class="form-select">
                     <option value="">-- Оберіть розділ --</option>
                     <option value="Белетристика (Художня література)">Белетристика (Художня література)</option>
@@ -52,6 +56,7 @@
                     <option value="Хобі">Хобі</option>
                     <option value="Домашнє господарство">Домашнє господарство</option>
                 </select>
+                <span asp-validation-for="Section" class="text-danger fw-bold"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Tags" class="form-label fw-bold"></label>
@@ -62,14 +67,34 @@
                 <select asp-for="Origin" class="form-select">
                     <option value="Куплено">Куплено</option>
                     <option value="Подаровано">Подаровано</option>
+                    <option value="Успадковано">Успадковано</option>
                 </select>
             </div>
+
+           
+            <div class="p-3 bg-light rounded border border-warning mt-4">
+                <h5 class="text-warning mb-3">Wishlist (Список бажаного)</h5>
+                <div class="form-check mb-2">
+                    <input asp-for="IsWishlist" class="form-check-input" style="transform: scale(1.5); margin-right: 10px;" />
+                    <label asp-for="IsWishlist" class="form-check-label fw-bold text-dark">
+                        Додати до Wishlist (замість основної бібліотеки)
+                    </label>
+                </div>
+                <div>
+                    <label asp-for="ShopLink" class="form-label fw-bold text-muted small mb-1"></label>
+                    <input asp-for="ShopLink" class="form-control form-control-sm" placeholder="https://..." />
+                </div>
+            </div>
+
+           
             <input type="hidden" asp-for="AvailabilityStatus" value="Вдома" />
             <input type="hidden" asp-for="ReadStatus" value="В планах" />
-            <input type="hidden" asp-for="DateAdded" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
         </div>
     </div>
-    <div class="mt-4">
+    
+    <hr class="my-4" />
+
+    <div class="mt-2">
         <button type="submit" class="btn btn-primary btn-lg px-5">Додати книгу</button>
         <a asp-action="Index" class="btn btn-secondary btn-lg px-4 ms-2">Скасувати</a>
     </div>

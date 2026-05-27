@@ -3,29 +3,33 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>@Model.Title</h2>
-    <a asp-action="Index" class="btn btn-outline-secondary">Повернутися до списку</a>
+   
+    <a asp-action="Index" asp-route-isWishlist="@Model.IsWishlist.ToString().ToLower()" class="btn btn-outline-secondary">Повернутися до списку</a>
 </div>
 
 <div class="row">
+   
     <div class="col-md-6 mb-4">
         <div class="card h-100 shadow-sm border-0">
             <div class="card-header bg-dark text-white fw-bold">Паспорт книги</div>
             <div class="card-body">
                 <table class="table table-borderless table-sm">
                     <tr><td class="text-muted w-50">Автор:</td><td class="fw-bold">@Model.Author</td></tr>
-                    <tr><td class="text-muted">Видавництво:</td><td class="fw-bold">@Model.Publisher</td></tr>
+                    <tr><td class="text-muted">Видавництво:</td><td class="fw-bold">@(string.IsNullOrEmpty(Model.Publisher) ? "—" : Model.Publisher)</td></tr>
                     <tr><td class="text-muted">Рік видання:</td><td class="fw-bold">@Model.Year</td></tr>
-                    <tr><td class="text-muted">Кількість сторінок:</td><td class="fw-bold">@Model.PageCount</td></tr>
-                    <tr><td class="text-muted">ISBN:</td><td class="fw-bold">@Model.ISBN</td></tr>
-                    <tr><td class="text-muted">Обкладинка:</td><td class="fw-bold">@Model.CoverType</td></tr>
+                    <tr><td class="text-muted">Кількість сторінок:</td><td class="fw-bold">@(Model.PageCount.HasValue ? Model.PageCount : "—")</td></tr>
+                    <tr><td class="text-muted">ISBN:</td><td class="fw-bold">@(string.IsNullOrEmpty(Model.ISBN) ? "—" : Model.ISBN)</td></tr>
+                    <tr><td class="text-muted">Обкладинка:</td><td class="fw-bold">@(string.IsNullOrEmpty(Model.CoverType) ? "—" : Model.CoverType)</td></tr>
                     <tr><td class="text-muted">Розділ:</td><td><span class="badge bg-info text-dark">@Model.Section</span></td></tr>
-                    <tr><td class="text-muted">Теги:</td><td>@Model.Tags</td></tr>
-                    <tr><td class="text-muted">Джерело появи:</td><td>@Model.Origin</td></tr>
+                    <tr><td class="text-muted">Теги:</td><td>@(string.IsNullOrEmpty(Model.Tags) ? "—" : Model.Tags)</td></tr>
+                    <tr><td class="text-muted">Джерело появи:</td><td>@(string.IsNullOrEmpty(Model.Origin) ? "—" : Model.Origin)</td></tr>
+                    <tr><td class="text-muted">Дата додавання:</td><td>@Model.DateAdded.ToString("dd.MM.yyyy")</td></tr>
                 </table>
             </div>
         </div>
     </div>
 
+   
     <div class="col-md-6 mb-4">
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-success text-white fw-bold">Особиста інформація</div>
@@ -33,27 +37,51 @@
                 <p><strong>Статус прочитання:</strong> @Model.ReadStatus</p>
                 <p><strong>Особиста оцінка:</strong> @(Model.PersonalRating.HasValue ? $"{Model.PersonalRating}/10" : "Ще немає оцінки")</p>
                 <p><strong>Відгук:</strong> @(string.IsNullOrEmpty(Model.Review) ? "—" : Model.Review)</p>
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success">Додати/змінити відгук</a>
+                
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success">Редагувати дані</a>
             </div>
         </div>
 
-        <div class="card shadow-sm border-0">
-            <div class="card-header bg-danger text-white fw-bold">Трекінг наявності</div>
-            <div class="card-body">
-                <p><strong>Поточний статус:</strong> 
-                    <span class="@(Model.AvailabilityStatus == "Вдома" ? "text-success fw-bold" : "text-danger fw-bold")">
-                        @Model.AvailabilityStatus
-                    </span>
-                </p>
-                @if (Model.AvailabilityStatus == "Видана на руки")
-                {
-                    <ul class="list-unstyled">
-                        <li><strong>Кому видана:</strong> @Model.BorrowerName</li>
-                        <li><strong>Контакти:</strong> @Model.BorrowerContact</li>
-                        <li><strong>Очікуване повернення:</strong> @Model.ExpectedReturnDate?.ToString("dd.MM.yyyy")</li>
-                    </ul>
-                }
+       
+        @if (Model.IsWishlist)
+        {
+            <div class="card shadow-sm border-0 border-warning">
+                <div class="card-header bg-warning text-dark fw-bold">🛒 Wishlist</div>
+                <div class="card-body">
+                    <p class="mb-2">Ця книга знаходиться у вашому списку бажаного.</p>
+                    @if (!string.IsNullOrEmpty(Model.ShopLink))
+                    {
+                        <p><strong>Посилання на магазин:</strong> <br/>
+                        <a href="@Model.ShopLink" target="_blank" class="text-primary">@Model.ShopLink</a></p>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">Посилання на магазин не вказано.</p>
+                    }
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+           
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-danger text-white fw-bold">Трекінг наявності</div>
+                <div class="card-body">
+                    <p><strong>Поточний статус:</strong> 
+                        <span class="@(Model.AvailabilityStatus == "Вдома" ? "text-success fw-bold" : "text-danger fw-bold")">
+                            @Model.AvailabilityStatus
+                        </span>
+                    </p>
+                    @if (Model.AvailabilityStatus == "Видана на руки")
+                    {
+                        <ul class="list-unstyled mb-0 mt-3 border-top pt-2">
+                            <li><strong>Кому видана:</strong> @Model.BorrowerName</li>
+                            <li><strong>Контакти:</strong> @Model.BorrowerContact</li>
+                            <li><strong>Очікуване повернення:</strong> @Model.ExpectedReturnDate?.ToString("dd.MM.yyyy")</li>
+                        </ul>
+                    }
+                </div>
+            </div>
+        }
     </div>
 </div>

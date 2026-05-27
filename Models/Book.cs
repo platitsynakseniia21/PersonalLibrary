@@ -8,17 +8,18 @@ namespace PersonalLibrary.Models
     {
         public int Id { get; set; }
 
-        
-        [Required(ErrorMessage = "Назва обов'язкова")]
+        [Required(ErrorMessage = "Назва книги є обов'язковою!")]
         [Display(Name = "Назва книги")]
         public string Title { get; set; }
 
+        [Required(ErrorMessage = "Вкажіть автора книги!")]
         [Display(Name = "Автор(и)")]
         public string Author { get; set; }
 
         [Display(Name = "Видавництво")]
         public string Publisher { get; set; }
 
+        [Required(ErrorMessage = "Вкажіть рік видання!")]
         [Display(Name = "Рік видання")]
         public int? Year { get; set; }
 
@@ -32,14 +33,13 @@ namespace PersonalLibrary.Models
         [Display(Name = "Тип обкладинки")]
         public string CoverType { get; set; }
 
-       
+        [Required(ErrorMessage = "Оберіть розділ бібліотеки!")]
         [Display(Name = "Розділ бібліотеки")]
         public string Section { get; set; }
 
         [Display(Name = "Теги (через кому)")]
         public string Tags { get; set; }
 
-        
         [Display(Name = "Джерело появи")]
         public string Origin { get; set; }
 
@@ -49,7 +49,6 @@ namespace PersonalLibrary.Models
         [Display(Name = "Поточна наявність")]
         public string AvailabilityStatus { get; set; } = "Вдома";
 
-       
         [Display(Name = "Статус прочитання")]
         public string ReadStatus { get; set; }
 
@@ -60,7 +59,6 @@ namespace PersonalLibrary.Models
         [Display(Name = "Відгук / Історія прочитання")]
         public string Review { get; set; }
 
-       
         [Display(Name = "Кому видана (Ім'я)")]
         public string BorrowerName { get; set; }
 
@@ -73,7 +71,6 @@ namespace PersonalLibrary.Models
         [Display(Name = "Очікувана дата повернення")]
         public DateTime? ExpectedReturnDate { get; set; }
 
-        
         public bool IsWishlist { get; set; } = false;
 
         [Display(Name = "Посилання на магазин")]
